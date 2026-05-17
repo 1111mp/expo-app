@@ -32,8 +32,12 @@ export function AppStack() {
       </Stack.Protected>
       <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen
-          name='login'
-          options={{ animation: 'fade', animationDuration: 300 }}
+          name='sign-in'
+          options={{
+            animation: 'fade',
+            animationDuration: 300,
+            headerShown: false,
+          }}
         />
       </Stack.Protected>
     </Stack>

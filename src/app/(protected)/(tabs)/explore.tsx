@@ -1,4 +1,4 @@
-import { Platform, Pressable, ScrollView } from 'react-native';
+import { Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
@@ -16,7 +16,7 @@ export default function TabTwoScreen() {
 
   return (
     <ScrollView
-      className='flex-1 light:bg-white dark:bg-black'
+      className='flex-1 bg-background'
       contentInset={insets}
       contentContainerClassName='flex-row justify-center android:p-safe web:pt-16 web:pb-6'
     >
@@ -29,7 +29,7 @@ export default function TabTwoScreen() {
 
           <ExternalLink href='https://docs.expo.dev' asChild>
             <Pressable className='active:opacity-70'>
-              <ThemedView className='flex-row justify-center items-center gap-1 px-6 py-2 rounded-4xl bg-secondary'>
+              <ThemedView className='flex-row justify-center items-center gap-1 px-6 py-2 rounded-4xl bg-default'>
                 <ThemedText type='link'>Expo documentation</ThemedText>
                 <StyledSymbolView
                   tintColorClassName='accent-black dark:accent-white'
@@ -63,7 +63,7 @@ export default function TabTwoScreen() {
           </Collapsible>
 
           <Collapsible title='Android, iOS, and web support'>
-            <ThemedView className='items-center'>
+            <View className='items-center'>
               <ThemedText type='small'>
                 You can open this project on Android, iOS, and the web. To open
                 the web version, press{' '}
@@ -74,7 +74,7 @@ export default function TabTwoScreen() {
                 className='w-full mt-2 aspect-296/171 rounded-2xl'
                 source={require('@/assets/images/tutorial-web.png')}
               />
-            </ThemedView>
+            </View>
           </Collapsible>
 
           <Collapsible title='Images'>

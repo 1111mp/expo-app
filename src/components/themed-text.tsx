@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Text, type TextProps } from 'react-native';
 
-import { cn } from '@/utils/cn';
+import { cn } from '@/lib/utils';
 
 export type ThemedTextProps = TextProps & VariantProps<typeof textVariants>;
 

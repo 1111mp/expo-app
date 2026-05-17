@@ -9,7 +9,7 @@ import { Pressable, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 
 import { StyledImage, StyledIonicons, ThemedView } from '@/components';
-import { cn } from '@/utils/cn';
+import { cn } from '@/lib/utils';
 
 const StyledComposerInput = withUniwind(ComposerPrimitive.Input);
 const StyledComposerCancel = withUniwind(ComposerPrimitive.Cancel);

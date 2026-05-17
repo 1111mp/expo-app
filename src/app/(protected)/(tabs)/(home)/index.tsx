@@ -12,7 +12,7 @@ import {
   ThemedView,
   WebBadge,
 } from '@/components';
-import { Button } from '@/components/ui';
+import { Button, Text } from '@/components/ui';
 import { useAuthStore } from '@/stores';
 
 function getDevMenuHint() {
@@ -48,7 +48,9 @@ export default function HomeScreen() {
           </ThemedText>
         </ThemedView>
 
-        <Button title='Logout' onPress={logOut} />
+        <Button onPress={logOut}>
+          <Text>Logout</Text>
+        </Button>
 
         <Pressable
           onPress={() => {
@@ -69,7 +71,7 @@ export default function HomeScreen() {
           get started
         </ThemedText>
 
-        <ThemedView className='gap-4 px-4 py-6 rounded-3xl self-stretch bg-secondary'>
+        <ThemedView className='gap-4 px-4 py-6 rounded-3xl self-stretch bg-default'>
           <HintRow
             title='Try editing'
             hint={<ThemedText type='code'>src/app/index.tsx</ThemedText>}

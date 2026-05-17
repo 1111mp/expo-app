@@ -1,8 +1,7 @@
 import '@/global.css';
 
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { PortalHost } from '@rn-primitives/portal';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
 import { SafeAreaListener } from 'react-native-safe-area-context';
 import { Uniwind } from 'uniwind';
 
@@ -14,18 +13,15 @@ if (!isWeb) {
 }
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <SafeAreaListener
-        onChange={({ insets }) => {
-          Uniwind.updateInsets(insets);
-        }}
-      >
-        <AnimatedSplashOverlay />
-        <AppStack />
-      </SafeAreaListener>
-    </ThemeProvider>
+    <SafeAreaListener
+      onChange={({ insets }) => {
+        Uniwind.updateInsets(insets);
+      }}
+    >
+      <AnimatedSplashOverlay />
+      <AppStack />
+      <PortalHost />
+    </SafeAreaListener>
   );
 }
