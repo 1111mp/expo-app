@@ -13,7 +13,8 @@ import {
   WebBadge,
 } from '@/components';
 import { Button, Text } from '@/components/ui';
-import { useAuthStore } from '@/stores';
+import { authClient } from '@/lib/better-auth/client';
+import { toast } from 'sonner-native';
 
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
@@ -36,7 +37,6 @@ function getDevMenuHint() {
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { logOut } = useAuthStore();
 
   return (
     <ThemedView className='flex-1 justify-center flex-row'>
@@ -48,7 +48,20 @@ export default function HomeScreen() {
           </ThemedText>
         </ThemedView>
 
-        <Button onPress={logOut}>
+        <Button
+          onPress={async () => {
+            await authClient.signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  router.dismissTo('/sign-in');
+                },
+                onError: (ctx) => {
+                  toast.error(ctx.error.message);
+                },
+              },
+            });
+          }}
+        >
           <Text>Logout</Text>
         </Button>
 
@@ -71,7 +84,7 @@ export default function HomeScreen() {
           get started
         </ThemedText>
 
-        <ThemedView className='gap-4 px-4 py-6 rounded-3xl self-stretch bg-default'>
+        <ThemedView className='gap-4 px-4 py-6 rounded-3xl self-stretch bg-secondary'>
           <HintRow
             title='Try editing'
             hint={<ThemedText type='code'>src/app/index.tsx</ThemedText>}

@@ -31,7 +31,9 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
+.env*.prod
 
 # typescript
 *.tsbuildinfo
@@ -41,6 +43,14 @@ app-example
 # generated native folders
 /ios
 /android
+
+# database
+/prisma/db.sqlite
+/prisma/db.sqlite-journal
+db.sqlite
+
+# Prisma generated client
+generated/
 
 # agent skill
 .agents

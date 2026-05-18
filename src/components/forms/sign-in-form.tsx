@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, type TextInput, View } from 'react-native';
+import { toast } from 'sonner-native';
 import z from 'zod';
 
 import { StyledIonicons } from '@/components';
@@ -18,8 +20,8 @@ import {
   Separator,
   Text,
 } from '@/components/ui';
+import { authClient } from '@/lib/better-auth/client';
 import { cn } from '@/lib/utils';
-import { useAuthStore } from '@/stores';
 import { TabKey } from './types';
 
 const schema = z.object({
@@ -34,7 +36,7 @@ type Props = {
 export function SignInForm({ onChangeTab }: Props) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-  const { logIn } = useAuthStore();
+  const router = useRouter();
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -47,6 +49,23 @@ export function SignInForm({ onChangeTab }: Props) {
 
   const onEmailSubmitEditing = () => {
     passwordInputRef.current?.focus();
+  };
+
+  const onSubmit = async (value: z.infer<typeof schema>) => {
+    await authClient.signIn.email(
+      {
+        email: value.email,
+        password: value.password,
+      },
+      {
+        onSuccess: () => {
+          router.replace('/');
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      },
+    );
   };
 
   return (
@@ -132,7 +151,7 @@ export function SignInForm({ onChangeTab }: Props) {
                     placeholder='Enter your password'
                     onBlur={field.onBlur}
                     onChangeText={field.onChange}
-                    onSubmitEditing={handleSubmit(logIn)}
+                    onSubmitEditing={handleSubmit(onSubmit)}
                   />
                   <Button
                     variant='ghost'
@@ -165,7 +184,7 @@ export function SignInForm({ onChangeTab }: Props) {
             )}
           />
 
-          <Button className='w-full' onPress={handleSubmit(logIn)}>
+          <Button className='w-full' onPress={handleSubmit(onSubmit)}>
             <Text>Continue</Text>
           </Button>
         </View>

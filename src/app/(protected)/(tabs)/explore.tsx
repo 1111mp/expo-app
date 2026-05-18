@@ -29,7 +29,7 @@ export default function TabTwoScreen() {
 
           <ExternalLink href='https://docs.expo.dev' asChild>
             <Pressable className='active:opacity-70'>
-              <ThemedView className='flex-row justify-center items-center gap-1 px-6 py-2 rounded-4xl bg-default'>
+              <ThemedView className='flex-row justify-center items-center gap-1 px-6 py-2 rounded-4xl bg-secondary'>
                 <ThemedText type='link'>Expo documentation</ThemedText>
                 <StyledSymbolView
                   tintColorClassName='accent-black dark:accent-white'

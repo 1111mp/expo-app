@@ -42,7 +42,7 @@ export function TabButton({
       <ThemedView
         className={cn(
           'px-4 py-1 rounded-2xl',
-          isFocused ? 'bg-foreground/10' : 'bg-default',
+          isFocused ? 'bg-foreground/10' : 'bg-secondary',
         )}
       >
         <ThemedText
@@ -62,7 +62,7 @@ export function CustomTabList(props: TabListProps) {
       {...props}
       className='absolute w-full flex-row justify-center items-center p-4'
     >
-      <ThemedView className='max-w-3xl flex-row items-center gap-2 grow px-8 py-2 rounded-4xl bg-default'>
+      <ThemedView className='max-w-3xl flex-row items-center gap-2 grow px-8 py-2 rounded-4xl bg-secondary'>
         <ThemedText type='small-bold' className='mr-auto'>
           Expo Starter
         </ThemedText>

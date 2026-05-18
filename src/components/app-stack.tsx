@@ -3,24 +3,25 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { isWeb } from '@/constants/platform';
-import { useAuthStore } from '@/stores';
+import { authClient } from '@/lib/better-auth/client';
 
 export function AppStack() {
-  const { isLoggedIn, _hasHydrated } = useAuthStore();
+  const { data: session, isPending } = authClient.useSession();
+  const isAuthenticated = !!session;
 
   useEffect(() => {
-    if (_hasHydrated) {
+    if (!isPending) {
       SplashScreen.hideAsync();
     }
-  }, [_hasHydrated]);
+  }, [isPending]);
 
-  if (!_hasHydrated && !isWeb) {
+  if (isWeb) {
     return null;
   }
 
   return (
     <Stack>
-      <Stack.Protected guard={isLoggedIn}>
+      <Stack.Protected guard={isAuthenticated}>
         <Stack.Screen
           name='(protected)'
           options={{
@@ -30,7 +31,7 @@ export function AppStack() {
           }}
         />
       </Stack.Protected>
-      <Stack.Protected guard={!isLoggedIn}>
+      <Stack.Protected guard={!isAuthenticated}>
         <Stack.Screen
           name='sign-in'
           options={{

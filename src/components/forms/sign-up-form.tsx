@@ -1,6 +1,9 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, TextInput, View } from 'react-native';
+import { toast } from 'sonner-native';
 import z from 'zod';
 
 import { StyledIonicons } from '@/components';
@@ -17,12 +20,12 @@ import {
   Text,
 } from '@/components/ui';
 import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/better-auth/client';
 import { cn } from '@/lib/utils';
-import { useAuthStore } from '@/stores';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { TabKey } from './types';
 
 const schema = z.object({
+  name: z.string().min(4, 'Invalid name').max(12, 'Invalid name'),
   email: z.email('Invalid email'),
   password: z.string().min(6, 'Invalid password'),
 });
@@ -34,10 +37,11 @@ type Props = {
 export function SignUpForm({ onChangeTab }: Props) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-  const { logIn } = useAuthStore();
+  const router = useRouter();
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -49,6 +53,24 @@ export function SignUpForm({ onChangeTab }: Props) {
     passwordInputRef.current?.focus();
   }
 
+  const onSubmit = async (value: z.infer<typeof schema>) => {
+    await authClient.signUp.email(
+      {
+        name: value.name,
+        email: value.email,
+        password: value.password,
+      },
+      {
+        onSuccess() {
+          router.replace('/');
+        },
+        onError(ctx) {
+          toast.error(ctx.error.message);
+        },
+      },
+    );
+  };
+
   return (
     <Card className='border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5 bg-background'>
       <CardHeader>
@@ -59,6 +81,44 @@ export function SignUpForm({ onChangeTab }: Props) {
       </CardHeader>
       <CardContent className='gap-6'>
         <View className='gap-4'>
+          <Controller
+            name='name'
+            control={control}
+            render={({ field, fieldState }) => (
+              <View className='gap-1'>
+                <Label htmlFor='name'>Name</Label>
+                <Input
+                  id='name'
+                  value={field.value}
+                  className={cn(
+                    fieldState.invalid && 'text-destructive border-destructive',
+                  )}
+                  placeholder='Enter your name'
+                  autoComplete='username-new'
+                  autoCapitalize='words'
+                  returnKeyType='next'
+                  submitBehavior='submit'
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  onSubmitEditing={onEmailSubmitEditing}
+                />
+                <Text
+                  className={cn(
+                    'text-sm text-muted-foreground',
+                    fieldState.invalid && 'text-destructive',
+                  )}
+                >
+                  Name must be between 4 and 12 characters.
+                </Text>
+                {fieldState.invalid && (
+                  <Text className='text-sm text-destructive'>
+                    {fieldState.error?.message}
+                  </Text>
+                )}
+              </View>
+            )}
+          />
+
           <Controller
             name='email'
             control={control}
@@ -118,7 +178,7 @@ export function SignUpForm({ onChangeTab }: Props) {
                     placeholder='Enter your password'
                     onBlur={field.onBlur}
                     onChangeText={field.onChange}
-                    onSubmitEditing={handleSubmit(logIn)}
+                    onSubmitEditing={handleSubmit(onSubmit)}
                   />
                   <Button
                     variant='ghost'
@@ -151,7 +211,7 @@ export function SignUpForm({ onChangeTab }: Props) {
             )}
           />
 
-          <Button className='w-full' onPress={handleSubmit(logIn)}>
+          <Button className='w-full' onPress={handleSubmit(onSubmit)}>
             <Text>Continue</Text>
           </Button>
         </View>

@@ -1,54 +1,116 @@
-import { Platform, View } from 'react-native';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import { View } from 'react-native';
+import { toast } from 'sonner-native';
 
 import { Button } from '@/components/ui';
-import { cn } from '@/lib/utils';
-import { StyledImage } from './styled-image';
-
-const SOCIAL_CONNECTION_STRATEGIES = [
-  {
-    type: 'oauth_apple',
-    source: { uri: 'https://img.clerk.com/static/apple.png?width=160' },
-    useTint: true,
-  },
-  {
-    type: 'oauth_google',
-    source: { uri: 'https://img.clerk.com/static/google.png?width=160' },
-    useTint: false,
-  },
-  {
-    type: 'oauth_github',
-    source: { uri: 'https://img.clerk.com/static/github.png?width=160' },
-    useTint: true,
-  },
-];
+import { authClient } from '@/lib/better-auth/client';
+import { StyledIonicons } from './styled-ionicons';
 
 export function SocialConnections() {
   return (
     <View className='gap-2 sm:flex-row sm:gap-3'>
-      {SOCIAL_CONNECTION_STRATEGIES.map((strategy) => {
-        return (
-          <Button
-            key={strategy.type}
-            variant='outline'
-            size='sm'
-            className='sm:flex-1'
-            onPress={() => {
-              // TODO: Authenticate with social provider and navigate to protected screen if successful
-            }}
-          >
-            <StyledImage
-              className={cn(
-                'size-4',
-                strategy.useTint && Platform.select({ web: 'dark:invert' }),
-              )}
-              tintColorClassName={
-                strategy.useTint ? 'accent-black dark:accent-white' : void 0
-              }
-              source={strategy.source}
-            />
-          </Button>
-        );
-      })}
+      <Button
+        variant='outline'
+        size='sm'
+        className='sm:flex-1'
+        onPress={async () => {
+          try {
+            const credential = await AppleAuthentication.signInAsync({
+              requestedScopes: [
+                AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                AppleAuthentication.AppleAuthenticationScope.EMAIL,
+              ],
+            });
+            if (credential.identityToken === null) {
+              toast.error(
+                "We couldn't verify your Apple account. Please try again.",
+              );
+              return;
+            }
+
+            await authClient.signIn.social(
+              {
+                provider: 'apple',
+                callbackURL: '/',
+                idToken: {
+                  token: credential.identityToken,
+                },
+              },
+              {
+                onError: (ctx) => {
+                  toast.error(ctx.error.message);
+                },
+              },
+            );
+          } catch (err: any) {
+            if (err?.code === 'ERR_REQUEST_CANCELED') {
+              toast.error('Sign in was cancelled.');
+              return;
+            }
+
+            toast.error(
+              err?.message ??
+                'Something went wrong. Please try again in a moment.',
+            );
+          }
+        }}
+      >
+        <StyledIonicons
+          size={18}
+          name='logo-apple'
+          className='text-black dark:text-white'
+        />
+      </Button>
+      <Button
+        variant='outline'
+        size='sm'
+        className='sm:flex-1'
+        onPress={async () => {
+          await authClient.signIn.social(
+            {
+              provider: 'google',
+              callbackURL: '/',
+            },
+            {
+              onError: (ctx) => {
+                console.log('ctx', ctx);
+                toast.error(ctx.error.message);
+              },
+            },
+          );
+        }}
+      >
+        <StyledIonicons
+          size={18}
+          name='logo-google'
+          className='text-black dark:text-white'
+        />
+      </Button>
+      <Button
+        variant='outline'
+        size='sm'
+        className='sm:flex-1'
+        onPress={async () => {
+          await authClient.signIn.social(
+            {
+              provider: 'github',
+              callbackURL: '/',
+            },
+            {
+              onError: (ctx) => {
+                console.log('ctx', ctx);
+                toast.error(ctx.error.message);
+              },
+            },
+          );
+        }}
+      >
+        <StyledIonicons
+          size={18}
+          name='logo-github'
+          className='text-black dark:text-white'
+        />
+      </Button>
     </View>
   );
 }

@@ -16,7 +16,7 @@ export function Collapsible({
         className='flex-row items-center gap-2 active:opacity-70'
         onPress={() => setIsOpen((value) => !value)}
       >
-        <ThemedView className='size-6 justify-center items-center rounded-xl bg-default'>
+        <ThemedView className='size-6 justify-center items-center rounded-xl bg-secondary'>
           <StyledSymbolView
             name={{
               ios: 'chevron.right',
@@ -35,7 +35,7 @@ export function Collapsible({
       </Pressable>
       {isOpen && (
         <Animated.View entering={FadeIn.duration(200)}>
-          <ThemedView className='p-6 mt-4 ml-6 rounded-2xl bg-default'>
+          <ThemedView className='p-6 mt-4 ml-6 rounded-2xl bg-secondary'>
             {children}
           </ThemedView>
         </Animated.View>
