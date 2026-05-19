@@ -11,6 +11,7 @@ import { Uniwind } from 'uniwind';
 
 import { AnimatedSplashOverlay, AppStack } from '@/components';
 import { isWeb } from '@/constants/platform';
+import { TRPCReactProvider } from '@/trpc/react';
 
 if (!isWeb) {
   SplashScreen.preventAutoHideAsync();
@@ -24,8 +25,10 @@ export default function RootLayout() {
           Uniwind.updateInsets(insets);
         }}
       >
-        <AnimatedSplashOverlay />
-        <AppStack />
+        <TRPCReactProvider>
+          <AnimatedSplashOverlay />
+          <AppStack />
+        </TRPCReactProvider>
         <PortalHost />
         <Toaster
           toastOptions={{

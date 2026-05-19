@@ -2,6 +2,7 @@ import * as Device from 'expo-device';
 import { Link, useRouter } from 'expo-router';
 import { Suspense } from 'react';
 import { ActivityIndicator, Platform, Pressable } from 'react-native';
+import { toast } from 'sonner-native';
 
 import {
   AnimatedIcon,
@@ -14,7 +15,8 @@ import {
 } from '@/components';
 import { Button, Text } from '@/components/ui';
 import { authClient } from '@/lib/better-auth/client';
-import { toast } from 'sonner-native';
+import { useApi } from '@/trpc/react';
+import { useQuery } from '@tanstack/react-query';
 
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
@@ -37,6 +39,19 @@ function getDevMenuHint() {
 
 export default function HomeScreen() {
   const router = useRouter();
+  const api = useApi();
+  const {
+    data: latestPosts,
+    isLoading,
+    refetch,
+  } = useQuery({
+    ...api.post.getLatest.queryOptions(),
+    enabled: false, // disable automatic query on mount
+    retry: false, // disable retries to see errors immediately
+  });
+
+  console.log('isLoading:', isLoading);
+  console.log('Latest posts:', latestPosts);
 
   return (
     <ThemedView className='flex-1 justify-center flex-row'>
@@ -47,6 +62,14 @@ export default function HomeScreen() {
             Welcome to&nbsp;Expo
           </ThemedText>
         </ThemedView>
+
+        <Button
+          onPress={() => {
+            refetch();
+          }}
+        >
+          <Text>Get Latest Post</Text>
+        </Button>
 
         <Button
           onPress={async () => {

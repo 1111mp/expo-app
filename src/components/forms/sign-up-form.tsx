@@ -4,7 +4,6 @@ import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, TextInput, View } from 'react-native';
 import { toast } from 'sonner-native';
-import z from 'zod';
 
 import { StyledIonicons } from '@/components';
 import { SocialConnections } from '@/components/social-connections';
@@ -22,6 +21,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/better-auth/client';
 import { cn } from '@/lib/utils';
+import { z } from '@/lib/zod';
 import { TabKey } from './types';
 
 const schema = z.object({

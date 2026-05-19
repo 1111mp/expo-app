@@ -73,7 +73,6 @@ export function SocialConnections() {
             },
             {
               onError: (ctx) => {
-                console.log('ctx', ctx);
                 toast.error(ctx.error.message);
               },
             },
@@ -98,7 +97,6 @@ export function SocialConnections() {
             },
             {
               onError: (ctx) => {
-                console.log('ctx', ctx);
                 toast.error(ctx.error.message);
               },
             },

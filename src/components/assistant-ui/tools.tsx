@@ -3,7 +3,8 @@ import type {
   Toolkit,
 } from '@assistant-ui/react-native';
 import { StyleSheet, Text, View } from 'react-native';
-import { z } from 'zod';
+
+import { z } from '@/lib/zod';
 
 // Open-Meteo API adapters (free, no API key needed)
 
