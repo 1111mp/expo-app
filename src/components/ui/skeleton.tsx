@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils/index';
+import * as React from 'react';
 import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -6,7 +7,6 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import * as React from 'react';
 
 const duration = 1000;
 
@@ -18,13 +18,13 @@ function Skeleton({
 
   React.useEffect(() => {
     sv.value = withRepeat(withTiming(0.5, { duration }), -1, true);
-  }, []);
+  }, [sv]);
 
   const style = useAnimatedStyle(
     () => ({
       opacity: sv.value,
     }),
-    [sv]
+    [sv],
   );
   return (
     <Animated.View

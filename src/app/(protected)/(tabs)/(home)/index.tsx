@@ -1,5 +1,6 @@
+import { useQuery, useQueryErrorResetBoundary } from '@tanstack/react-query';
 import * as Device from 'expo-device';
-import { Link, useRouter } from 'expo-router';
+import { type ErrorBoundaryProps, Link, useRouter } from 'expo-router';
 import { Suspense } from 'react';
 import { ActivityIndicator, Platform, Pressable } from 'react-native';
 import { toast } from 'sonner-native';
@@ -16,7 +17,6 @@ import {
 import { Button, Text } from '@/components/ui';
 import { authClient } from '@/lib/better-auth/client';
 import { useApi } from '@/trpc/react';
-import { useQuery } from '@tanstack/react-query';
 
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
@@ -34,6 +34,24 @@ function getDevMenuHint() {
     <ThemedText type='small'>
       press <ThemedText type='code'>{shortcut}</ThemedText>
     </ThemedText>
+  );
+}
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  const { reset } = useQueryErrorResetBoundary();
+
+  const handleRetry = async () => {
+    reset();
+    await retry();
+  };
+
+  return (
+    <ThemedView className='flex-1 items-center justify-center gap-4 px-6'>
+      <ThemedText>Error: {error.message}</ThemedText>
+      <Button onPress={handleRetry}>
+        <Text>Try again</Text>
+      </Button>
+    </ThemedView>
   );
 }
 

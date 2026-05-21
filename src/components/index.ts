@@ -12,4 +12,3 @@ export * from './styled-symbol-view';
 export * from './themed-text';
 export * from './themed-view';
 export * from './web-badge';
-

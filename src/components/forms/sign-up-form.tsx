@@ -147,7 +147,7 @@ export function SignUpForm({ onChangeTab }: Props) {
                     fieldState.invalid && 'text-destructive',
                   )}
                 >
-                  We'll never share your email with anyone else.
+                  We&apos;ll never share your email with anyone else.
                 </Text>
                 {fieldState.invalid && (
                   <Text className='text-sm text-destructive'>

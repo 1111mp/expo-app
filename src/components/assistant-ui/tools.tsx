@@ -171,12 +171,12 @@ function WeatherToolUI(
       temperature?: number;
       weatherCode?: number;
       windSpeed?: number;
-      forecast?: Array<{
+      forecast?: {
         label: string;
         code: number;
         min: number;
         max: number;
-      }>;
+      }[];
       error?: string;
     }
   >,

@@ -11,7 +11,7 @@ import {
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import { createTRPCContext } from '@trpc/tanstack-react-query';
 import { useState } from 'react';
-import SuperJSON from 'superjson';
+import * as SuperJSON from 'superjson';
 
 import { authClient } from '@/lib/better-auth/client';
 import { type AppRouter } from '@/server/api/root';
