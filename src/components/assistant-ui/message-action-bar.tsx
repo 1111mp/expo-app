@@ -1,4 +1,5 @@
 import { ActionBarPrimitive } from '@assistant-ui/react-native';
+import * as Clipboard from 'expo-clipboard';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
 
@@ -10,7 +11,12 @@ const StyledActionBarReload = withUniwind(ActionBarPrimitive.Reload);
 export function MessageActionBar() {
   return (
     <View className='flex-row gap-1 mt-1'>
-      <StyledActionBarCopy className='p-1.5 rounded-lg'>
+      <StyledActionBarCopy
+        className='p-1.5 rounded-lg'
+        copyToClipboard={async (text) => {
+          await Clipboard.setStringAsync(text);
+        }}
+      >
         {({ isCopied }) => (
           <StyledIonicons
             name={isCopied ? 'checkmark' : 'copy-outline'}

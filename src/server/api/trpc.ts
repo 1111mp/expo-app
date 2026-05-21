@@ -10,7 +10,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
-import { auth } from '@/lib/better-auth/server';
+import { auth } from '@/lib/better-auth';
 import { z } from '@/lib/zod';
 import { db } from '@/server/db';
 

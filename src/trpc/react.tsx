@@ -70,7 +70,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             url: getBaseUrl() + '/api/trpc',
             headers: () => {
               const headers = new Headers();
-              headers.set('x-trpc-source', 'nextjs-react');
+              headers.set('x-trpc-source', 'expo-react');
               const cookies = authClient.getCookie();
               if (cookies) {
                 headers.set('Cookie', cookies);
@@ -89,7 +89,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             url: getBaseUrl() + '/api/trpc',
             headers: () => {
               const headers = new Headers();
-              headers.set('x-trpc-source', 'nextjs-react');
+              headers.set('x-trpc-source', 'expo-react');
               const cookies = authClient.getCookie();
               if (cookies) {
                 headers.set('Cookie', cookies);

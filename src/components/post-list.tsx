@@ -1,17 +1,12 @@
-import { useEffect } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { useApi } from '@/trpc/react';
 import { ThemedView } from './themed-view';
 
 export function PostList() {
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  async function fetchPosts() {
-    const response = await fetch('/api/post');
-    const data = await response.json();
-    console.log('posts', data);
-  }
+  const api = useApi();
+  const { data: posts } = useSuspenseQuery(api.post.getPosts.queryOptions());
+  console.log('posts', posts);
 
   return <ThemedView></ThemedView>;
 }

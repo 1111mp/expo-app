@@ -5,7 +5,7 @@ import {
 import { lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import { useMemo } from 'react';
 
-const CHAT_API = 'http://localhost:3000/api/chat';
+const CHAT_API = process.env.EXPO_PUBLIC_CHAT_ENDPOINT_URL ?? '/api/chat';
 
 export function useAppRuntime() {
   const transport = useMemo(

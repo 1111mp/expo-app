@@ -42,10 +42,9 @@ function AttachmentPreview() {
 export function Composer() {
   const aui = useAui();
   const attachmentsCount = useAuiState((s) => s.composer.attachments.length);
+  const isRunning = useAuiState((s) => s.thread.isRunning);
   const canCancel = useAuiState((s) => s.composer.canCancel);
-  const canSend = useAuiState(
-    (s) => !s.thread.isRunning && s.composer.isEditing && !s.composer.isEmpty,
-  );
+  const canSend = useAuiState((s) => s.composer.canSend);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -81,9 +80,9 @@ export function Composer() {
       )}
       <View className='flex-row items-center p-1.5 border rounded-2xl bg-input border-border'>
         <Pressable
-          className='justify-center items-center size-7.5'
+          className='justify-center items-center size-7.5 active:opacity-70'
           onPress={pickImage}
-          disabled={canCancel}
+          disabled={isRunning}
         >
           <StyledIonicons
             name='add-circle-outline'
@@ -98,9 +97,9 @@ export function Composer() {
           placeholderTextColorClassName='accent-muted-foreground'
           multiline
           maxLength={4000}
-          editable={!canCancel}
+          editable={!isRunning}
         />
-        {canCancel ? (
+        {isRunning && canCancel ? (
           <StyledComposerCancel className='justify-center items-center size-7.5 ml-1.5 rounded-full bg-destructive'>
             <View className='size-3 rounded-xs bg-white' />
           </StyledComposerCancel>

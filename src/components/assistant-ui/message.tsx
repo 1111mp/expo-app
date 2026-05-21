@@ -62,7 +62,7 @@ export function MessageBubble() {
         <MessagePrimitive.Attachments>
           {() => <MessageImageAttachment />}
         </MessagePrimitive.Attachments>
-        <ThemedView className='max-w-[85%] px-4 py-5 rounded-[20] rounded-br-md'>
+        <ThemedView className='max-w-[85%] px-4 py-5 rounded-[20] rounded-br-md bg-secondary'>
           <MessagePrimitive.Content
             renderText={({ part }) => <TextPart part={part} />}
           />
@@ -74,7 +74,7 @@ export function MessageBubble() {
 
   return (
     <ThemedView className='items-start px-4 py-1.5'>
-      <ThemedView className='max-w-[85%] px-4 py-5 rounded-[20] rounded-bl-md'>
+      <ThemedView className='max-w-[85%] px-4 py-5 rounded-[20] rounded-bl-md bg-secondary'>
         <MessagePrimitive.Content
           renderText={({ part }) => <TextPart part={part} />}
         />
