@@ -19,6 +19,7 @@ export default function ProtectedLayout() {
         options={{
           title: '',
           headerShadowVisible: false,
+          headerBackTitle: 'Home',
           headerBackButtonDisplayMode: 'minimal',
           ...Platform.select({
             ios: {
