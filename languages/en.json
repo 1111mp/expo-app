@@ -1,0 +1,14 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Expo App",
+    "NSCameraUsageDescription": "We need camera permission to scan QR codes",
+    "NSContactsUsageDescription": "We need access to your contacts to help you find friends using this app.",
+    "Localizable.strings": {
+      "HELLO_NOTIFICATION_KEY": "Hello World"
+    }
+  },
+  "android": {
+    "app_name": "Expo App",
+    "HELLO_NOTIFICATION_KEY": "Hello World"
+  }
+}

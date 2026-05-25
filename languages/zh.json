@@ -1,0 +1,14 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Expo App",
+    "NSCameraUsageDescription": "我们需要您的摄像头权限来扫描二维码",
+    "NSContactsUsageDescription": "我们需要访问您的通讯录以帮您找到使用该应用的好友",
+    "Localizable.strings": {
+      "HELLO_NOTIFICATION_KEY": "你好世界"
+    }
+  },
+  "android": {
+    "app_name": "Expo App",
+    "HELLO_NOTIFICATION_KEY": "你好世界"
+  }
+}

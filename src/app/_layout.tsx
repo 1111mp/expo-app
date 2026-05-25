@@ -1,4 +1,5 @@
 import '@/global.css';
+import '@/lib/i18n';
 
 import { PortalHost } from '@rn-primitives/portal';
 import { BlurView } from 'expo-blur';

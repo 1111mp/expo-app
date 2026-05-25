@@ -10,7 +10,10 @@
     "ios": {
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.anonymous.expo-app",
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +28,10 @@
     "web": {
       "output": "server",
       "favicon": "./assets/images/favicon.png"
+    },
+    "locales": {
+      "en": "./languages/en.json",
+      "zh": "./languages/zh.json"
     },
     "plugins": [
       "expo-router",
@@ -42,8 +49,20 @@
       "expo-web-browser",
       "expo-apple-authentication",
       "expo-font",
-      "expo-image"
+      "expo-image",
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": ["en", "zh-Hans"],
+            "android": ["en", "zh"]
+          }
+        }
+      ]
     ],
+    "extra": {
+      "supportsRTL": true
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true

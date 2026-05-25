@@ -2,6 +2,7 @@ import { useQuery, useQueryErrorResetBoundary } from '@tanstack/react-query';
 import * as Device from 'expo-device';
 import { type ErrorBoundaryProps, Link, useRouter } from 'expo-router';
 import { Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Platform, Pressable } from 'react-native';
 import { toast } from 'sonner-native';
 
@@ -67,6 +68,7 @@ export default function HomeScreen() {
     enabled: false, // disable automatic query on mount
     retry: false, // disable retries to see errors immediately
   });
+  const { t } = useTranslation();
 
   console.log('isLoading:', isLoading);
   console.log('Latest posts:', latestPosts);
@@ -77,7 +79,7 @@ export default function HomeScreen() {
         <ThemedView className='flex-1 items-center justify-center gap-6 px-6'>
           <AnimatedIcon />
           <ThemedText type='title' className='text-center'>
-            Welcome to&nbsp;Expo
+            {t('welcome')}
           </ThemedText>
         </ThemedView>
 
