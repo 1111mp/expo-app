@@ -54,11 +54,18 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["en", "zh-Hans"],
-            "android": ["en", "zh"]
+            "ios": [
+              "en",
+              "zh-Hans"
+            ],
+            "android": [
+              "en",
+              "zh"
+            ]
           }
         }
-      ]
+      ],
+      "expo-status-bar"
     ],
     "extra": {
       "supportsRTL": true

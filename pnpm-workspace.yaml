@@ -1,14 +1,14 @@
 allowBuilds:
-  "@prisma/engines": false
+  '@prisma/engines': false
   better-sqlite3: true
   msgpackr-extract: false
   prisma: false
   unrs-resolver: false
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - "@expo/*"
-  - "expo"
-  - "expo-*"
-  - "babel-preset-expo"
-  - "@types/react"
+  - '@expo/*'
+  - 'expo'
+  - 'expo-*'
+  - 'babel-preset-expo'
+  - '@types/react'
 nodeLinker: hoisted

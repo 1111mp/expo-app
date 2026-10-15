@@ -78,10 +78,11 @@ export function Thread() {
             <ThreadPrimitive.If empty={false}>
               <StyledThreadMessages
                 showsVerticalScrollIndicator={true}
-                components={{ Message: MessageBubble }}
                 contentContainerClassName='min-h-full px-1 pb-6'
                 contentContainerStyle={{ paddingTop: headerHeight }}
-              />
+              >
+                {() => <MessageBubble />}
+              </StyledThreadMessages>
             </ThreadPrimitive.If>
           </View>
           <View>

@@ -1,5 +1,5 @@
 import { getLocales } from 'expo-localization';
-import i18n from 'i18next';
+import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import en from '@/locales/en.json';
@@ -7,7 +7,7 @@ import zh_CN from '@/locales/zh_CN.json';
 
 const lng = getLocales().at(0)?.languageCode ?? 'en';
 
-i18n.use(initReactI18next).init({
+void i18next.use(initReactI18next).init({
   lng,
   fallbackLng: 'en',
   supportedLngs: ['en', 'zh'],
@@ -24,4 +24,4 @@ i18n.use(initReactI18next).init({
   },
 });
 
-export default i18n;
+export { i18next };
